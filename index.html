@@ -150,10 +150,12 @@ tailwind.config = {
   /* Bottom nav items */
   .bn-item { padding: 0 12px; transition: color 0.2s ease; }
   .bn-item .material-symbols-outlined { font-size: 24px; transition: all 0.2s ease; }
+  .bn-item span:not(.material-symbols-outlined) { font-weight: 400; }
   .bn-item.bn-active { color: #0A1628 !important; }
   .bn-item.bn-active .material-symbols-outlined {
     font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
   }
+  .bn-item.bn-active span:not(.material-symbols-outlined) { font-weight: 700; }
 
   /* Kategori scroll hint fade */
   .hide-scrollbar { -webkit-overflow-scrolling: touch; }
@@ -645,17 +647,17 @@ tailwind.config = {
 
 <!-- ===== MOBILE BOTTOM NAV (global, always visible) ===== -->
 <nav class="md:hidden fixed bottom-3 left-3 right-3 bg-[#fef9f1] shadow-[0_-4px_20px_rgba(10,22,40,0.12)] flex justify-around items-center h-16 z-50 rounded-2xl">
-  <a id="bn-beranda" onclick="goTo('beranda')" class="bn-item flex flex-col items-center justify-center gap-1 text-[#0A1628] cursor-pointer">
-    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;">home</span>
-    <span class="text-[10px] font-bold">Beranda</span>
+  <a id="bn-beranda" onclick="goTo('beranda')" class="bn-item flex flex-col items-center justify-center gap-1 text-slate-400 cursor-pointer">
+    <span class="material-symbols-outlined">home</span>
+    <span class="text-[10px]">Beranda</span>
   </a>
   <a id="bn-katalog" onclick="goTo('katalog')" class="bn-item flex flex-col items-center justify-center gap-1 text-slate-400 cursor-pointer">
     <span class="material-symbols-outlined">library_books</span>
-    <span class="text-[10px] font-bold">Koleksi</span>
+    <span class="text-[10px]">Koleksi</span>
   </a>
   <a id="bn-dashboard" onclick="goTo('dashboard')" class="bn-item flex flex-col items-center justify-center gap-1 text-slate-400 cursor-pointer">
     <span class="material-symbols-outlined">history</span>
-    <span class="text-[10px] font-bold">Dashboard</span>
+    <span class="text-[10px]">Dashboard</span>
   </a>
 </nav>
 
@@ -3414,6 +3416,7 @@ function initApp() {
   filteredBooks = [...books];
   renderBooks(filteredBooks);
   updateNavbar();
+  updateBottomNav('beranda');
 }
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initApp);
