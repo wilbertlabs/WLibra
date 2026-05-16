@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Syarat & Ketentuan | PerpusDigital</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#000000",
+        "surface-variant": "#e7e2da",
+        "surface-container-highest": "#e7e2da",
+        "on-tertiary-container": "#4f3d00",
+        "inverse-surface": "#32302b",
+        "secondary-container": "#95f0df",
+        "tertiary": "#755b00",
+        "on-secondary-container": "#006f63",
+        "on-surface": "#1d1c17",
+        "on-error": "#ffffff",
+        "tertiary-fixed": "#ffe08e",
+        "tertiary-container": "#cea72c",
+        "primary-container": "#101c2e",
+        "surface-tint": "#535f74",
+        "on-primary": "#ffffff",
+        "background": "#fef9f1",
+        "secondary": "#006b5f",
+        "error": "#ba1a1a",
+        "surface-bright": "#fef9f1",
+        "inverse-on-surface": "#f5f0e8",
+        "on-secondary": "#ffffff",
+        "surface-container-low": "#f8f3eb",
+        "surface": "#fef9f1",
+        "on-background": "#1d1c17",
+        "outline-variant": "#c5c6cd",
+        "on-primary-container": "#79849b",
+        "outline": "#75777d",
+        "surface-container": "#f2ede5",
+        "surface-container-high": "#ece8e0",
+        "surface-dim": "#ded9d2",
+        "on-surface-variant": "#45474c"
+      },
+      fontFamily: { "headline": ["Newsreader"], "body": ["Manrope"], "label": ["Manrope"] }
+    }
+  }
+}
+</script>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: 'Manrope', sans-serif; background-color: #fef9f1; color: #1d1c17; overflow-x: hidden; }
+  .font-serif { font-family: 'Newsreader', serif; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+  /* Scroll progress bar */
+  #scroll-progress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #006b5f, #cea72c);
+    z-index: 200; width: 0%; transition: width 0.1s linear;
+  }
+
+  /* Sticky TOC active */
+  .toc-link { transition: all 0.2s ease; border-left: 2px solid transparent; padding-left: 12px; }
+  .toc-link.active { border-left-color: #006b5f; color: #006b5f; font-weight: 700; }
+
+  /* Section reveal animation */
+  .section-reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .section-reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* Accordion */
+  .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+  .accordion-content.open { max-height: 2000px; }
+  .accordion-icon { transition: transform 0.3s ease; }
+  .accordion-open .accordion-icon { transform: rotate(180deg); }
+
+  /* Highlight badge */
+  .highlight-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #95f0df; color: #006f63; border-radius: 100px;
+    padding: 4px 12px; font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  /* Back to top button */
+  #back-to-top {
+    position: fixed; bottom: 32px; right: 24px; z-index: 150;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: #0A1628; color: white; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(10,22,40,0.25);
+    opacity: 0; transform: translateY(12px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+  }
+  #back-to-top.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+  /* Print styles */
+  @media print {
+    header, nav, #back-to-top, #scroll-progress { display: none !important; }
+    .section-reveal { opacity: 1 !important; transform: none !important; }
+    .accordion-content { max-height: none !important; }
+  }
+
+  @media (max-width: 767px) {
+    #back-to-top { bottom: 80px; right: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Scroll Progress Bar -->
+<div id="scroll-progress"></div>
+
+<!-- Back to Top -->
+<button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Kembali ke atas">
+  <span class="material-symbols-outlined" style="font-size:20px;">arrow_upward</span>
+</button>
+
+<!-- ===== NAVBAR ===== -->
+<header id="navbar" style="position:sticky;top:0;z-index:100;background:rgba(254,249,241,0.92);backdrop-filter:blur(12px);border-bottom:1px solid #ece8e0;transition:box-shadow 0.3s ease;">
+  <div style="max-width:1280px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px;">
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex-shrink:0;">
+      <div style="width:32px;height:32px;background:#0A1628;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+        <span class="material-symbols-outlined" style="font-size:18px;color:white;">local_library</span>
+      </div>
+      <span style="font-family:'Newsreader',serif;font-size:1.1rem;font-weight:800;color:#0A1628;">PerpusDigital</span>
+    </a>
+
+    <div style="display:flex;align-items:center;gap:8px;">
+      <a href="index.html" style="display:flex;align-items:center;gap:6px;text-decoration:none;color:#45474c;font-size:13px;font-weight:600;padding:8px 14px;border-radius:100px;transition:background 0.2s ease;" onmouseover="this.style.background='#f2ede5'" onmouseout="this.style.background='transparent'">
+        <span class="material-symbols-outlined" style="font-size:16px;">arrow_back</span>
+        <span class="hidden sm:inline">Kembali ke Beranda</span>
+      </a>
+      <button onclick="window.print()" style="display:flex;align-items:center;gap:6px;background:#f2ede5;border:none;padding:8px 14px;border-radius:100px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:600;color:#45474c;cursor:pointer;transition:background 0.2s ease;" onmouseover="this.style.background='#ece8e0'" onmouseout="this.style.background='#f2ede5'">
+        <span class="material-symbols-outlined" style="font-size:16px;">print</span>
+        <span class="hidden sm:inline">Cetak</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO HEADER ===== -->
+<div style="background:#0A1628;padding:64px 24px 80px;position:relative;overflow:hidden;">
+  <!-- Decorative circles -->
+  <div style="position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;border:1px solid rgba(255,255,255,0.06);"></div>
+  <div style="position:absolute;bottom:-80px;left:-40px;width:240px;height:240px;border-radius:50%;border:1px solid rgba(255,255,255,0.04);"></div>
+  <div style="position:absolute;top:40%;right:10%;width:6px;height:6px;border-radius:50%;background:#cea72c;opacity:0.6;"></div>
+  <div style="position:absolute;top:20%;left:15%;width:4px;height:4px;border-radius:50%;background:#006b5f;opacity:0.5;"></div>
+
+  <div style="max-width:1280px;margin:0 auto;position:relative;z-index:1;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;">
+      <span class="highlight-badge">
+        <span class="material-symbols-outlined" style="font-size:13px;">verified</span>
+        Dokumen Resmi
+      </span>
+    </div>
+    <h1 style="font-family:'Newsreader',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:800;color:white;margin:0 0 16px;line-height:1.15;">Syarat &amp; Ketentuan</h1>
+    <p style="font-size:16px;color:rgba(255,255,255,0.65);line-height:1.7;margin:0 0 32px;max-width:560px;">Harap baca dokumen ini dengan seksama sebelum menggunakan layanan PerpusDigital. Dengan mengakses platform kami, Anda menyetujui seluruh ketentuan yang tercantum di bawah ini.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:24px;">
+      <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;">
+        <span class="material-symbols-outlined" style="font-size:16px;color:#cea72c;">schedule</span>
+        Berlaku sejak 1 Januari 2025
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;">
+        <span class="material-symbols-outlined" style="font-size:16px;color:#cea72c;">update</span>
+        Diperbarui: April 2025
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;color:rgba(255,255,255,0.5);font-size:12px;font-weight:600;">
+        <span class="material-symbols-outlined" style="font-size:16px;color:#cea72c;">menu_book</span>
+        Waktu baca: ±8 menit
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div style="max-width:1280px;margin:0 auto;padding:48px 24px 80px;display:grid;grid-template-columns:1fr;gap:40px;" class="lg:grid-cols-[280px_1fr]">
+
+  <!-- Sticky Table of Contents (Desktop) -->
+  <aside style="display:none;" class="lg:block">
+    <div style="position:sticky;top:80px;">
+      <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#75777d;margin:0 0 16px;">Daftar Isi</p>
+      <nav id="toc" style="display:flex;flex-direction:column;gap:4px;">
+        <a href="#penerimaan" class="toc-link" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 12px;border-radius:4px;">1. Penerimaan Ketentuan</a>
+        <a href="#layanan" class="toc-link" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 12px;border-radius:4px;">2. Deskripsi Layanan</a>
+        <a href="#akun" class="toc-link" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 12px;border-radius:4px;">3. Akun Pengguna</a>
+        <a href="#penggunaan" class="toc-link" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 12px;border-radius:4px;">4. Ketentuan Penggunaan</a>
+        <a href="#konten" class="toc-link" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 12px;border-radius:4px;">5. Hak Cipta & Konten</a>
+        <a href="#privasi" class="toc-link" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 12px;border-radius:4px;">6. Privasi & Data</a>
+        <a href="#larangan" class="toc-link" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 12px;border-radius:4px;">7. Larangan Penggunaan</a>
+        <a href="#tanggung-jawab" class="toc-link" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 12px;border-radius:4px;">8. Batasan Tanggung Jawab</a>
+        <a href="#perubahan" class="toc-link" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 12px;border-radius:4px;">9. Perubahan Ketentuan</a>
+        <a href="#penghentian" class="toc-link" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 12px;border-radius:4px;">10. Penghentian Layanan</a>
+        <a href="#hukum" class="toc-link" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 12px;border-radius:4px;">11. Hukum yang Berlaku</a>
+        <a href="#kontak" class="toc-link" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 12px;border-radius:4px;">12. Hubungi Kami</a>
+      </nav>
+
+      <!-- Quick Links -->
+      <div style="margin-top:32px;padding:20px;background:#f2ede5;border-radius:16px;">
+        <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#75777d;margin:0 0 12px;">Dokumen Terkait</p>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="kebijakan-privasi.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:#0A1628;font-size:12px;font-weight:600;padding:8px 10px;background:white;border-radius:8px;transition:background 0.2s ease;" onmouseover="this.style.background='#ece8e0'" onmouseout="this.style.background='white'">
+            <span class="material-symbols-outlined" style="font-size:15px;color:#006b5f;">shield</span>
+            Kebijakan Privasi
+          </a>
+          <a href="index.html" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:#0A1628;font-size:12px;font-weight:600;padding:8px 10px;background:white;border-radius:8px;transition:background 0.2s ease;" onmouseover="this.style.background='#ece8e0'" onmouseout="this.style.background='white'">
+            <span class="material-symbols-outlined" style="font-size:15px;color:#006b5f;">home</span>
+            Beranda
+          </a>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Article Content -->
+  <article style="min-width:0;">
+
+    <!-- Mobile TOC Accordion -->
+    <div style="background:#f2ede5;border-radius:16px;margin-bottom:40px;overflow:hidden;" class="lg:hidden">
+      <button onclick="toggleMobileTOC(this)" style="width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:none;border:none;cursor:pointer;font-family:'Manrope',sans-serif;font-weight:700;font-size:14px;color:#0A1628;">
+        <span style="display:flex;align-items:center;gap:8px;">
+          <span class="material-symbols-outlined" style="font-size:18px;color:#006b5f;">list</span>
+          Daftar Isi
+        </span>
+        <span class="material-symbols-outlined accordion-icon" style="font-size:20px;color:#75777d;">expand_more</span>
+      </button>
+      <div class="accordion-content" id="mobile-toc">
+        <div style="padding:0 20px 16px;display:flex;flex-direction:column;gap:4px;">
+          <a href="#penerimaan" onclick="closeMobileTOC()" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 0;">1. Penerimaan Ketentuan</a>
+          <a href="#layanan" onclick="closeMobileTOC()" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 0;">2. Deskripsi Layanan</a>
+          <a href="#akun" onclick="closeMobileTOC()" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 0;">3. Akun Pengguna</a>
+          <a href="#penggunaan" onclick="closeMobileTOC()" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 0;">4. Ketentuan Penggunaan</a>
+          <a href="#konten" onclick="closeMobileTOC()" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 0;">5. Hak Cipta & Konten</a>
+          <a href="#privasi" onclick="closeMobileTOC()" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 0;">6. Privasi & Data</a>
+          <a href="#larangan" onclick="closeMobileTOC()" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 0;">7. Larangan Penggunaan</a>
+          <a href="#tanggung-jawab" onclick="closeMobileTOC()" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 0;">8. Batasan Tanggung Jawab</a>
+          <a href="#perubahan" onclick="closeMobileTOC()" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 0;">9. Perubahan Ketentuan</a>
+          <a href="#penghentian" onclick="closeMobileTOC()" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 0;">10. Penghentian Layanan</a>
+          <a href="#hukum" onclick="closeMobileTOC()" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 0;">11. Hukum yang Berlaku</a>
+          <a href="#kontak" onclick="closeMobileTOC()" style="font-size:13px;color:#45474c;text-decoration:none;padding:6px 0;">12. Hubungi Kami</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agreement Banner -->
+    <div class="section-reveal" style="background:linear-gradient(135deg,#006b5f,#004d45);border-radius:20px;padding:28px 32px;margin-bottom:48px;display:flex;align-items:flex-start;gap:16px;">
+      <div style="width:44px;height:44px;background:rgba(255,255,255,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span class="material-symbols-outlined" style="font-size:22px;color:white;">handshake</span>
+      </div>
+      <div>
+        <p style="font-weight:700;color:white;margin:0 0 6px;font-size:15px;">Persetujuan Pengguna</p>
+        <p style="font-size:13px;color:rgba(255,255,255,0.75);margin:0;line-height:1.7;">Dengan mendaftar atau menggunakan layanan PerpusDigital, Anda dianggap telah membaca, memahami, dan menyetujui Syarat &amp; Ketentuan ini secara penuh dan mengikat secara hukum.</p>
+      </div>
+    </div>
+
+    <!-- Sections -->
+
+    <!-- Section 1 -->
+    <section id="penerimaan" class="section-reveal" style="margin-bottom:48px;scroll-margin-top:80px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <span style="width:36px;height:36px;background:#0A1628;color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:14px;font-weight:800;flex-shrink:0;">1</span>
+        <h2 style="font-family:'Newsreader',serif;font-size:1.6rem;font-weight:800;color:#0A1628;margin:0;">Penerimaan Ketentuan</h2>
+      </div>
+      <div style="padding-left:48px;">
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 16px;">Selamat datang di <strong>PerpusDigital</strong> — The Digital Curator Archive. Layanan ini dioperasikan oleh <strong>Wilbertlabs</strong> dan dapat diakses melalui platform web maupun aplikasi mobile kami.</p>
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 16px;">Dengan mengakses, menelusuri, atau menggunakan layanan PerpusDigital dalam bentuk apapun, Anda menyatakan bahwa:</p>
+        <ul style="color:#45474c;font-size:15px;line-height:1.85;margin:0;padding-left:24px;display:flex;flex-direction:column;gap:8px;">
+          <li>Anda berusia minimal <strong>13 tahun</strong>, atau didampingi oleh orang tua/wali yang sah;</li>
+          <li>Anda memiliki kapasitas hukum untuk menyetujui perjanjian ini;</li>
+          <li>Anda telah membaca dan memahami seluruh isi Syarat &amp; Ketentuan ini.</li>
+        </ul>
+        <div style="margin-top:20px;padding:16px 20px;background:#f8f3eb;border-radius:12px;border-left:3px solid #cea72c;display:flex;gap:12px;align-items:flex-start;">
+          <span class="material-symbols-outlined" style="font-size:18px;color:#755b00;flex-shrink:0;margin-top:2px;">info</span>
+          <p style="font-size:13px;color:#45474c;margin:0;line-height:1.7;">Jika Anda tidak menyetujui ketentuan ini, harap hentikan penggunaan layanan PerpusDigital segera.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr style="border:none;border-top:1px solid #ece8e0;margin-bottom:48px;"/>
+
+    <!-- Section 2 -->
+    <section id="layanan" class="section-reveal" style="margin-bottom:48px;scroll-margin-top:80px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <span style="width:36px;height:36px;background:#0A1628;color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:14px;font-weight:800;flex-shrink:0;">2</span>
+        <h2 style="font-family:'Newsreader',serif;font-size:1.6rem;font-weight:800;color:#0A1628;margin:0;">Deskripsi Layanan</h2>
+      </div>
+      <div style="padding-left:48px;">
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 24px;">PerpusDigital menyediakan platform perpustakaan digital yang memungkinkan pengguna untuk mengakses, membaca, dan mengunduh berbagai konten literasi pilihan, termasuk namun tidak terbatas pada:</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:20px;">
+          <div style="background:#f2ede5;border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:10px;">
+            <span class="material-symbols-outlined" style="font-size:20px;color:#006b5f;">auto_stories</span>
+            <span style="font-size:14px;font-weight:600;color:#0A1628;">Buku Fiksi & Non-Fiksi</span>
+          </div>
+          <div style="background:#f2ede5;border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:10px;">
+            <span class="material-symbols-outlined" style="font-size:20px;color:#006b5f;">biotech</span>
+            <span style="font-size:14px;font-weight:600;color:#0A1628;">Sains & Teknologi</span>
+          </div>
+          <div style="background:#f2ede5;border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:10px;">
+            <span class="material-symbols-outlined" style="font-size:20px;color:#006b5f;">history_edu</span>
+            <span style="font-size:14px;font-weight:600;color:#0A1628;">Sejarah & Budaya</span>
+          </div>
+          <div style="background:#f2ede5;border-radius:12px;padding:16px 18px;display:flex;align-items:center;gap:10px;">
+            <span class="material-symbols-outlined" style="font-size:20px;color:#006b5f;">business_center</span>
+            <span style="font-size:14px;font-weight:600;color:#0A1628;">Bisnis & Ekonomi</span>
+          </div>
+        </div>
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0;">Kami berhak untuk mengubah, menambah, atau menghentikan fitur layanan kapan saja tanpa pemberitahuan terlebih dahulu. Perubahan tersebut tidak akan mengurangi hak-hak dasar yang telah Anda miliki.</p>
+      </div>
+    </section>
+
+    <hr style="border:none;border-top:1px solid #ece8e0;margin-bottom:48px;"/>
+
+    <!-- Section 3 -->
+    <section id="akun" class="section-reveal" style="margin-bottom:48px;scroll-margin-top:80px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <span style="width:36px;height:36px;background:#0A1628;color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:14px;font-weight:800;flex-shrink:0;">3</span>
+        <h2 style="font-family:'Newsreader',serif;font-size:1.6rem;font-weight:800;color:#0A1628;margin:0;">Akun Pengguna</h2>
+      </div>
+      <div style="padding-left:48px;">
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 20px;">Beberapa fitur PerpusDigital memerlukan pendaftaran akun. Dengan membuat akun, Anda bertanggung jawab untuk:</p>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:20px;">
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:28px;height:28px;background:#95f0df;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+              <span class="material-symbols-outlined" style="font-size:14px;color:#006f63;">check</span>
+            </div>
+            <p style="font-size:15px;color:#45474c;margin:0;line-height:1.7;">Memberikan informasi yang akurat, terkini, dan lengkap saat pendaftaran.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:28px;height:28px;background:#95f0df;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+              <span class="material-symbols-outlined" style="font-size:14px;color:#006f63;">check</span>
+            </div>
+            <p style="font-size:15px;color:#45474c;margin:0;line-height:1.7;">Menjaga kerahasiaan kata sandi dan tidak membagikannya kepada pihak lain.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:28px;height:28px;background:#95f0df;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+              <span class="material-symbols-outlined" style="font-size:14px;color:#006f63;">check</span>
+            </div>
+            <p style="font-size:15px;color:#45474c;margin:0;line-height:1.7;">Bertanggung jawab atas seluruh aktivitas yang terjadi di bawah akun Anda.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;">
+            <div style="width:28px;height:28px;background:#95f0df;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+              <span class="material-symbols-outlined" style="font-size:14px;color:#006f63;">check</span>
+            </div>
+            <p style="font-size:15px;color:#45474c;margin:0;line-height:1.7;">Segera melaporkan kepada kami jika terjadi akses tidak sah ke akun Anda.</p>
+          </div>
+        </div>
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0;">PerpusDigital tidak bertanggung jawab atas kerugian yang timbul akibat penggunaan kredensial akun Anda oleh pihak lain.</p>
+      </div>
+    </section>
+
+    <hr style="border:none;border-top:1px solid #ece8e0;margin-bottom:48px;"/>
+
+    <!-- Section 4 -->
+    <section id="penggunaan" class="section-reveal" style="margin-bottom:48px;scroll-margin-top:80px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <span style="width:36px;height:36px;background:#0A1628;color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:14px;font-weight:800;flex-shrink:0;">4</span>
+        <h2 style="font-family:'Newsreader',serif;font-size:1.6rem;font-weight:800;color:#0A1628;margin:0;">Ketentuan Penggunaan</h2>
+      </div>
+      <div style="padding-left:48px;">
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 20px;">Layanan PerpusDigital diberikan untuk penggunaan pribadi dan non-komersial. Anda diperkenankan untuk:</p>
+        <div style="background:#f2ede5;border-radius:16px;padding:24px;margin-bottom:20px;">
+          <p style="font-weight:700;font-size:13px;color:#0A1628;text-transform:uppercase;letter-spacing:0.05em;margin:0 0 12px;">Diizinkan ✓</p>
+          <ul style="color:#45474c;font-size:14px;line-height:1.9;margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px;">
+            <li>Mengakses dan membaca konten untuk keperluan pribadi</li>
+            <li>Menyimpan progres membaca di perangkat Anda</li>
+            <li>Menambahkan buku ke daftar favorit</li>
+            <li>Berbagi rekomendasi buku dengan pengguna lain</li>
+            <li>Mencetak halaman untuk keperluan pribadi</li>
+          </ul>
+        </div>
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0;">Penggunaan layanan untuk kepentingan komersial, distribusi massal, atau tujuan yang melanggar hukum tidak diperkenankan dan dapat mengakibatkan penutupan akun.</p>
+      </div>
+    </section>
+
+    <hr style="border:none;border-top:1px solid #ece8e0;margin-bottom:48px;"/>
+
+    <!-- Section 5 -->
+    <section id="konten" class="section-reveal" style="margin-bottom:48px;scroll-margin-top:80px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <span style="width:36px;height:36px;background:#0A1628;color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:14px;font-weight:800;flex-shrink:0;">5</span>
+        <h2 style="font-family:'Newsreader',serif;font-size:1.6rem;font-weight:800;color:#0A1628;margin:0;">Hak Cipta &amp; Konten</h2>
+      </div>
+      <div style="padding-left:48px;">
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 16px;">Seluruh konten yang tersedia di PerpusDigital — termasuk namun tidak terbatas pada teks, gambar, desain antarmuka, kode sumber, nama merek, dan logo — merupakan milik eksklusif <strong>Wilbertlabs</strong> atau mitra lisensi kami, dan dilindungi oleh hukum hak cipta Indonesia maupun internasional.</p>
+        <div style="padding:20px 24px;background:#fff3cd;border-radius:12px;border-left:3px solid #cea72c;margin-bottom:16px;">
+          <p style="font-size:14px;color:#5a4a00;margin:0;line-height:1.7;"><strong>⚠️ Larangan:</strong> Dilarang keras menyalin, mendistribusikan, memodifikasi, atau mengeksploitasi konten PerpusDigital tanpa izin tertulis dari kami. Pelanggaran dapat dikenai sanksi hukum sesuai Undang-Undang Hak Cipta No. 28 Tahun 2014.</p>
+        </div>
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0;">Konten yang diunggah oleh pengguna (seperti ulasan atau komentar) tetap menjadi milik pengguna, namun Anda memberikan PerpusDigital lisensi non-eksklusif untuk menampilkan konten tersebut di platform kami.</p>
+      </div>
+    </section>
+
+    <hr style="border:none;border-top:1px solid #ece8e0;margin-bottom:48px;"/>
+
+    <!-- Section 6 -->
+    <section id="privasi" class="section-reveal" style="margin-bottom:48px;scroll-margin-top:80px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <span style="width:36px;height:36px;background:#0A1628;color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:14px;font-weight:800;flex-shrink:0;">6</span>
+        <h2 style="font-family:'Newsreader',serif;font-size:1.6rem;font-weight:800;color:#0A1628;margin:0;">Privasi &amp; Data Pengguna</h2>
+      </div>
+      <div style="padding-left:48px;">
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 20px;">Kami menghargai privasi Anda. Pengumpulan dan penggunaan data pribadi Anda diatur secara terpisah dalam <strong>Kebijakan Privasi</strong> kami yang merupakan bagian tidak terpisahkan dari Syarat &amp; Ketentuan ini.</p>
+        <a href="kebijakan-privasi.html" style="display:inline-flex;align-items:center;gap:8px;background:#006b5f;color:white;text-decoration:none;padding:12px 24px;border-radius:100px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;transition:opacity 0.2s ease;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+          <span class="material-symbols-outlined" style="font-size:16px;">shield</span>
+          Baca Kebijakan Privasi
+        </a>
+      </div>
+    </section>
+
+    <hr style="border:none;border-top:1px solid #ece8e0;margin-bottom:48px;"/>
+
+    <!-- Section 7 -->
+    <section id="larangan" class="section-reveal" style="margin-bottom:48px;scroll-margin-top:80px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <span style="width:36px;height:36px;background:#0A1628;color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:14px;font-weight:800;flex-shrink:0;">7</span>
+        <h2 style="font-family:'Newsreader',serif;font-size:1.6rem;font-weight:800;color:#0A1628;margin:0;">Larangan Penggunaan</h2>
+      </div>
+      <div style="padding-left:48px;">
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 20px;">Pengguna dilarang keras melakukan hal-hal berikut di platform PerpusDigital:</p>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:#fff5f5;border-radius:10px;border-left:3px solid #ba1a1a;">
+            <span class="material-symbols-outlined" style="font-size:18px;color:#ba1a1a;flex-shrink:0;">block</span>
+            <p style="font-size:14px;color:#45474c;margin:0;line-height:1.7;">Menggunakan bot, crawler, scraper, atau alat otomatis lainnya untuk mengakses layanan tanpa izin tertulis.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:#fff5f5;border-radius:10px;border-left:3px solid #ba1a1a;">
+            <span class="material-symbols-outlined" style="font-size:18px;color:#ba1a1a;flex-shrink:0;">block</span>
+            <p style="font-size:14px;color:#45474c;margin:0;line-height:1.7;">Mengganggu, merusak, atau melemahkan infrastruktur atau keamanan platform kami.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:#fff5f5;border-radius:10px;border-left:3px solid #ba1a1a;">
+            <span class="material-symbols-outlined" style="font-size:18px;color:#ba1a1a;flex-shrink:0;">block</span>
+            <p style="font-size:14px;color:#45474c;margin:0;line-height:1.7;">Mendistribusikan konten bajakan, menyebarkan malware, atau melakukan penipuan melalui platform kami.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:#fff5f5;border-radius:10px;border-left:3px solid #ba1a1a;">
+            <span class="material-symbols-outlined" style="font-size:18px;color:#ba1a1a;flex-shrink:0;">block</span>
+            <p style="font-size:14px;color:#45474c;margin:0;line-height:1.7;">Mengakses akun pengguna lain tanpa izin atau menyamar sebagai pengguna lain.</p>
+          </div>
+          <div style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:#fff5f5;border-radius:10px;border-left:3px solid #ba1a1a;">
+            <span class="material-symbols-outlined" style="font-size:18px;color:#ba1a1a;flex-shrink:0;">block</span>
+            <p style="font-size:14px;color:#45474c;margin:0;line-height:1.7;">Mengunggah atau menyebarkan konten yang bersifat SARA, pornografi, kekerasan, atau melanggar hukum yang berlaku di Indonesia.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr style="border:none;border-top:1px solid #ece8e0;margin-bottom:48px;"/>
+
+    <!-- Section 8 -->
+    <section id="tanggung-jawab" class="section-reveal" style="margin-bottom:48px;scroll-margin-top:80px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <span style="width:36px;height:36px;background:#0A1628;color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:14px;font-weight:800;flex-shrink:0;">8</span>
+        <h2 style="font-family:'Newsreader',serif;font-size:1.6rem;font-weight:800;color:#0A1628;margin:0;">Batasan Tanggung Jawab</h2>
+      </div>
+      <div style="padding-left:48px;">
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 16px;">Layanan PerpusDigital disediakan <em>"sebagaimana adanya"</em> dan <em>"sebagaimana tersedia"</em>. Kami tidak menjamin bahwa layanan akan selalu tersedia tanpa gangguan, bebas dari kesalahan, atau memenuhi harapan spesifik Anda.</p>
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 16px;">Sejauh diizinkan oleh hukum yang berlaku, Wilbertlabs dan afiliasinya tidak bertanggung jawab atas:</p>
+        <ul style="color:#45474c;font-size:15px;line-height:1.85;margin:0;padding-left:24px;display:flex;flex-direction:column;gap:8px;">
+          <li>Kerugian tidak langsung, insidental, atau konsekuensial;</li>
+          <li>Kehilangan data akibat kegagalan teknis;</li>
+          <li>Gangguan layanan akibat pemeliharaan sistem atau force majeure;</li>
+          <li>Konten pihak ketiga yang mungkin terhubung dari platform kami.</li>
+        </ul>
+      </div>
+    </section>
+
+    <hr style="border:none;border-top:1px solid #ece8e0;margin-bottom:48px;"/>
+
+    <!-- Section 9 -->
+    <section id="perubahan" class="section-reveal" style="margin-bottom:48px;scroll-margin-top:80px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <span style="width:36px;height:36px;background:#0A1628;color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:14px;font-weight:800;flex-shrink:0;">9</span>
+        <h2 style="font-family:'Newsreader',serif;font-size:1.6rem;font-weight:800;color:#0A1628;margin:0;">Perubahan Ketentuan</h2>
+      </div>
+      <div style="padding-left:48px;">
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 16px;">PerpusDigital berhak memperbarui Syarat &amp; Ketentuan ini sewaktu-waktu. Perubahan signifikan akan diberitahukan melalui:</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:8px;background:#f2ede5;padding:10px 16px;border-radius:100px;">
+            <span class="material-symbols-outlined" style="font-size:16px;color:#006b5f;">mail</span>
+            <span style="font-size:13px;font-weight:600;color:#0A1628;">Email Notifikasi</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;background:#f2ede5;padding:10px 16px;border-radius:100px;">
+            <span class="material-symbols-outlined" style="font-size:16px;color:#006b5f;">notifications</span>
+            <span style="font-size:13px;font-weight:600;color:#0A1628;">Pemberitahuan Aplikasi</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;background:#f2ede5;padding:10px 16px;border-radius:100px;">
+            <span class="material-symbols-outlined" style="font-size:16px;color:#006b5f;">language</span>
+            <span style="font-size:13px;font-weight:600;color:#0A1628;">Banner di Situs Web</span>
+          </div>
+        </div>
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0;">Penggunaan layanan yang berkelanjutan setelah perubahan diterbitkan dianggap sebagai persetujuan Anda terhadap ketentuan yang diperbarui.</p>
+      </div>
+    </section>
+
+    <hr style="border:none;border-top:1px solid #ece8e0;margin-bottom:48px;"/>
+
+    <!-- Section 10 -->
+    <section id="penghentian" class="section-reveal" style="margin-bottom:48px;scroll-margin-top:80px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <span style="width:36px;height:36px;background:#0A1628;color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:14px;font-weight:800;flex-shrink:0;">10</span>
+        <h2 style="font-family:'Newsreader',serif;font-size:1.6rem;font-weight:800;color:#0A1628;margin:0;">Penghentian Layanan</h2>
+      </div>
+      <div style="padding-left:48px;">
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 16px;">Kami berhak, atas kebijakan kami sendiri, untuk menangguhkan atau menghentikan akses Anda ke layanan PerpusDigital jika:</p>
+        <ul style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 16px;padding-left:24px;display:flex;flex-direction:column;gap:8px;">
+          <li>Anda melanggar Syarat &amp; Ketentuan ini;</li>
+          <li>Aktivitas akun Anda dianggap merugikan pengguna lain atau platform;</li>
+          <li>Terdapat keputusan hukum yang mengharuskan penghentian akses.</li>
+        </ul>
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0;">Anda juga dapat menghentikan penggunaan layanan kapan saja dengan menghapus akun Anda melalui menu pengaturan.</p>
+      </div>
+    </section>
+
+    <hr style="border:none;border-top:1px solid #ece8e0;margin-bottom:48px;"/>
+
+    <!-- Section 11 -->
+    <section id="hukum" class="section-reveal" style="margin-bottom:48px;scroll-margin-top:80px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <span style="width:36px;height:36px;background:#0A1628;color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:14px;font-weight:800;flex-shrink:0;">11</span>
+        <h2 style="font-family:'Newsreader',serif;font-size:1.6rem;font-weight:800;color:#0A1628;margin:0;">Hukum yang Berlaku</h2>
+      </div>
+      <div style="padding-left:48px;">
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 16px;">Syarat &amp; Ketentuan ini diatur oleh dan ditafsirkan sesuai dengan hukum <strong>Republik Indonesia</strong>. Setiap sengketa yang timbul dari atau sehubungan dengan ketentuan ini akan diselesaikan melalui:</p>
+        <div style="background:#f2ede5;border-radius:16px;padding:24px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+            <span class="material-symbols-outlined" style="font-size:22px;color:#0A1628;">gavel</span>
+            <strong style="font-size:15px;color:#0A1628;">Mekanisme Penyelesaian Sengketa</strong>
+          </div>
+          <p style="font-size:14px;color:#45474c;margin:0;line-height:1.8;">Pertama melalui musyawarah mufakat dalam 30 hari kerja. Apabila tidak tercapai kesepakatan, sengketa akan diselesaikan melalui Pengadilan Negeri <strong>Palembang</strong> sesuai yurisdiksi kami.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr style="border:none;border-top:1px solid #ece8e0;margin-bottom:48px;"/>
+
+    <!-- Section 12 -->
+    <section id="kontak" class="section-reveal" style="margin-bottom:48px;scroll-margin-top:80px;">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+        <span style="width:36px;height:36px;background:#0A1628;color:white;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Newsreader',serif;font-size:14px;font-weight:800;flex-shrink:0;">12</span>
+        <h2 style="font-family:'Newsreader',serif;font-size:1.6rem;font-weight:800;color:#0A1628;margin:0;">Hubungi Kami</h2>
+      </div>
+      <div style="padding-left:48px;">
+        <p style="color:#45474c;font-size:15px;line-height:1.85;margin:0 0 24px;">Jika Anda memiliki pertanyaan, keberatan, atau membutuhkan klarifikasi terkait Syarat &amp; Ketentuan ini, silakan hubungi kami melalui:</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
+          <div style="background:#0A1628;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+            <div style="width:40px;height:40px;background:rgba(255,255,255,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+              <span class="material-symbols-outlined" style="font-size:20px;color:white;">mail</span>
+            </div>
+            <div>
+              <p style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.5);margin:0 0 4px;font-weight:700;">Email</p>
+              <p style="font-size:14px;color:white;font-weight:600;margin:0;">legal@perpusdigital.id</p>
+            </div>
+          </div>
+          <div style="background:#f2ede5;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+            <div style="width:40px;height:40px;background:#ece8e0;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+              <span class="material-symbols-outlined" style="font-size:20px;color:#0A1628;">language</span>
+            </div>
+            <div>
+              <p style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#75777d;margin:0 0 4px;font-weight:700;">Website</p>
+              <p style="font-size:14px;color:#0A1628;font-weight:600;margin:0;">www.perpusdigital.id</p>
+            </div>
+          </div>
+          <div style="background:#f2ede5;border-radius:16px;padding:24px;display:flex;flex-direction:column;gap:12px;">
+            <div style="width:40px;height:40px;background:#ece8e0;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+              <span class="material-symbols-outlined" style="font-size:20px;color:#0A1628;">location_on</span>
+            </div>
+            <div>
+              <p style="font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#75777d;margin:0 0 4px;font-weight:700;">Alamat</p>
+              <p style="font-size:14px;color:#0A1628;font-weight:600;margin:0;">Palembang, Sumatera Selatan, Indonesia</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Last Updated Banner -->
+    <div class="section-reveal" style="background:#f2ede5;border-radius:16px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span class="material-symbols-outlined" style="font-size:22px;color:#75777d;">history</span>
+        <div>
+          <p style="font-size:12px;color:#75777d;margin:0 0 2px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;">Versi Dokumen</p>
+          <p style="font-size:14px;color:#0A1628;font-weight:700;margin:0;">v2.1 — Berlaku sejak 1 April 2025</p>
+        </div>
+      </div>
+      <button onclick="window.print()" style="display:flex;align-items:center;gap:8px;background:#0A1628;color:white;border:none;padding:10px 20px;border-radius:100px;font-family:'Manrope',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:opacity 0.2s ease;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+        <span class="material-symbols-outlined" style="font-size:16px;">download</span>
+        Unduh / Cetak
+      </button>
+    </div>
+
+  </article>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer style="background:#fef9f1;border-top:1px solid #ece8e0;padding:40px 24px 48px;">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:32px;" class="md:grid-cols-3">
+    <div>
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;margin-bottom:12px;">
+        <div style="width:28px;height:28px;background:#0A1628;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+          <span class="material-symbols-outlined" style="font-size:16px;color:white;">local_library</span>
+        </div>
+        <span style="font-family:'Newsreader',serif;font-size:1rem;font-weight:800;color:#0A1628;">PerpusDigital</span>
+      </a>
+      <p style="font-size:12px;color:#75777d;line-height:1.8;margin:0;max-width:280px;">The Digital Curator Archive. Menyediakan akses tanpa batas ke ribuan literasi pilihan untuk masa depan yang lebih cerdas.</p>
+    </div>
+    <div>
+      <h5 style="font-size:11px;font-weight:700;color:#0A1628;text-transform:uppercase;letter-spacing:0.1em;margin:0 0 16px;">Tautan Cepat</h5>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="index.html" style="font-size:12px;text-transform:uppercase;color:#75777d;text-decoration:none;font-weight:600;transition:color 0.2s ease;" onmouseover="this.style.color='#0A1628'" onmouseout="this.style.color='#75777d'">Beranda</a>
+        <a href="index.html#tentang" style="font-size:12px;text-transform:uppercase;color:#75777d;text-decoration:none;font-weight:600;transition:color 0.2s ease;" onmouseover="this.style.color='#0A1628'" onmouseout="this.style.color='#75777d'">Tentang Kami</a>
+        <a href="kebijakan-privasi.html" style="font-size:12px;text-transform:uppercase;color:#75777d;text-decoration:none;font-weight:600;transition:color 0.2s ease;" onmouseover="this.style.color='#0A1628'" onmouseout="this.style.color='#75777d'">Kebijakan Privasi</a>
+        <a href="syarat-ketentuan.html" style="font-size:12px;text-transform:uppercase;color:#006b5f;text-decoration:none;font-weight:700;">Syarat &amp; Ketentuan ←</a>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex;gap:12px;margin-bottom:24px;">
+        <a href="#" style="width:36px;height:36px;border-radius:50%;background:#f2ede5;display:flex;align-items:center;justify-content:center;transition:background 0.2s ease;cursor:pointer;" onmouseover="this.style.background='#0A1628';this.querySelector('span').style.color='white'" onmouseout="this.style.background='#f2ede5';this.querySelector('span').style.color=''">
+          <span class="material-symbols-outlined" style="font-size:16px;">language</span>
+        </a>
+        <a href="mailto:legal@perpusdigital.id" style="width:36px;height:36px;border-radius:50%;background:#f2ede5;display:flex;align-items:center;justify-content:center;transition:background 0.2s ease;cursor:pointer;" onmouseover="this.style.background='#0A1628';this.querySelector('span').style.color='white'" onmouseout="this.style.background='#f2ede5';this.querySelector('span').style.color=''">
+          <span class="material-symbols-outlined" style="font-size:16px;">mail</span>
+        </a>
+      </div>
+      <p style="font-size:12px;color:#75777d;margin:0;">© 2025 PerpusDigital by Wilbertlabs.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== SCROLL PROGRESS =====
+window.addEventListener('scroll', () => {
+  const el = document.getElementById('scroll-progress');
+  const docH = document.documentElement.scrollHeight - window.innerHeight;
+  el.style.width = (window.scrollY / docH * 100) + '%';
+
+  // Back to top
+  const btn = document.getElementById('back-to-top');
+  if (window.scrollY > 400) btn.classList.add('show');
+  else btn.classList.remove('show');
+});
+
+// ===== SECTION REVEAL =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.section-reveal').forEach(el => observer.observe(el));
+
+// ===== STICKY TOC HIGHLIGHT =====
+const sections = document.querySelectorAll('section[id]');
+const tocLinks = document.querySelectorAll('#toc .toc-link');
+const tocObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      tocLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`#toc [href="#${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+sections.forEach(s => tocObserver.observe(s));
+
+// ===== MOBILE TOC TOGGLE =====
+function toggleMobileTOC(btn) {
+  const content = document.getElementById('mobile-toc');
+  const isOpen = content.classList.contains('open');
+  content.classList.toggle('open');
+  btn.classList.toggle('accordion-open');
+}
+function closeMobileTOC() {
+  const content = document.getElementById('mobile-toc');
+  const btn = content.previousElementSibling;
+  content.classList.remove('open');
+  btn.classList.remove('accordion-open');
+}
+</script>
+</body>
+</html>

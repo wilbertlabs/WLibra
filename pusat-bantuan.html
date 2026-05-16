@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pusat Bantuan | PerpusDigital</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#000000",
+        "surface-variant": "#e7e2da",
+        "secondary-container": "#95f0df",
+        "tertiary": "#755b00",
+        "on-secondary-container": "#006f63",
+        "on-surface": "#1d1c17",
+        "tertiary-container": "#cea72c",
+        "primary-container": "#101c2e",
+        "background": "#fef9f1",
+        "secondary": "#006b5f",
+        "error": "#ba1a1a",
+        "surface-bright": "#fef9f1",
+        "on-secondary": "#ffffff",
+        "surface-container-low": "#f8f3eb",
+        "surface": "#fef9f1",
+        "on-background": "#1d1c17",
+        "outline-variant": "#c5c6cd",
+        "outline": "#75777d",
+        "surface-container": "#f2ede5",
+        "surface-container-high": "#ece8e0",
+        "surface-dim": "#ded9d2",
+        "on-surface-variant": "#45474c"
+      },
+      fontFamily: { "headline": ["Newsreader"], "body": ["Manrope"] }
+    }
+  }
+}
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Manrope', sans-serif; background: #fef9f1; color: #1d1c17; overflow-x: hidden; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+
+  /* ── Scroll progress ── */
+  #scroll-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg,#006b5f,#cea72c); z-index: 300; transition: width .1s linear; }
+
+  /* ── Navbar ── */
+  #navbar { position: sticky; top: 0; z-index: 200; background: rgba(254,249,241,.93); backdrop-filter: blur(14px); border-bottom: 1px solid #ece8e0; }
+
+  /* ── Hero search ── */
+  .hero-bg { background: #0A1628; position: relative; overflow: hidden; }
+  .hero-bg::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,107,95,.25) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 80% at 10% 80%, rgba(206,167,44,.12) 0%, transparent 60%);
+  }
+  .dot-grid {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* ── Search input ── */
+  #search-input { transition: box-shadow .25s ease, border-color .25s ease; }
+  #search-input:focus { outline: none; border-color: #006b5f; box-shadow: 0 0 0 4px rgba(0,107,95,.15); }
+
+  /* ── Category pills ── */
+  .cat-pill { cursor: pointer; transition: all .2s ease; border: 2px solid transparent; }
+  .cat-pill:hover { border-color: #006b5f; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,107,95,.12); }
+  .cat-pill.active {
+    background: #0A1628 !important;
+    border-color: #0A1628;
+  }
+  .cat-pill.active .cat-icon {
+    background: rgba(255,255,255,.15) !important;
+  }
+  .cat-pill.active h3 { color: white !important; }
+  .cat-pill.active p { color: rgba(255,255,255,.6) !important; }
+
+
+  /* ── FAQ accordion ── */
+  .faq-item { border-bottom: 1px solid #ece8e0; }
+  .faq-btn { width: 100%; text-align: left; background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 20px 0; gap: 16px; font-family: 'Manrope', sans-serif; }
+  .faq-body { max-height: 0; overflow: hidden; transition: max-height .38s cubic-bezier(.4,0,.2,1), padding .3s ease; }
+  .faq-body.open { max-height: 600px; padding-bottom: 20px; }
+  .faq-icon { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #f2ede5; display: flex; align-items: center; justify-content: center; transition: transform .3s ease, background .2s ease; }
+  .faq-btn.open .faq-icon { transform: rotate(45deg); background: #0A1628; color: white; }
+
+  /* ── Article cards ── */
+  .article-card { transition: transform .25s ease, box-shadow .25s ease; }
+  .article-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(10,22,40,.1); }
+
+  /* ── Contact cards ── */
+  .contact-card { transition: transform .2s ease, box-shadow .2s ease; }
+  .contact-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(10,22,40,.1); }
+
+  /* ── Fade-in reveal ── */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .5s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal-d1 { transition-delay: .05s; }
+  .reveal-d2 { transition-delay: .12s; }
+  .reveal-d3 { transition-delay: .19s; }
+  .reveal-d4 { transition-delay: .26s; }
+
+  /* ── Back to top ── */
+  #btt { position: fixed; bottom: 28px; right: 24px; z-index: 150; width: 44px; height: 44px; border-radius: 50%; background: #0A1628; color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(10,22,40,.28); opacity: 0; transform: translateY(12px); transition: opacity .3s, transform .3s; pointer-events: none; }
+  #btt.show { opacity: 1; transform: none; pointer-events: auto; }
+  @media (max-width: 767px) { #btt { bottom: 76px; right: 16px; } }
+
+  /* ── Highlight chip ── */
+  .chip { display: inline-flex; align-items: center; gap: 5px; background: #95f0df; color: #006f63; border-radius: 100px; padding: 4px 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+
+  /* ── Search highlight ── */
+  mark { background: #ffe08e; color: #241a00; border-radius: 3px; padding: 0 2px; }
+
+  /* ── No results ── */
+  #no-results { display: none; text-align: center; padding: 48px 24px; }
+
+  /* ── Toast ── */
+  #toast { position: fixed; bottom: 2rem; right: 2rem; z-index: 400; background: #0A1628; color: white; padding: 12px 20px; border-radius: 100px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 8px 28px rgba(0,0,0,.2); transform: translateY(80px); opacity: 0; transition: all .3s ease; pointer-events: none; }
+  #toast.show { transform: none; opacity: 1; }
+
+  @media (max-width: 767px) {
+    #toast { bottom: 6rem; right: 1rem; }
+  }
+
+  /* ── Responsive fixes ── */
+  html, body { overflow-x: hidden; max-width: 100%; }
+  * { min-width: 0; }
+
+  @media (max-width: 639px) {
+    /* Stats bar - stack jadi 2 kolom */
+    .stats-bar-inner { gap: 16px !important; }
+
+    /* Category grid - 2 kolom di mobile */
+    #categories-section .cat-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 12px !important;
+    }
+    #categories-section .cat-pill {
+      padding: 16px 14px !important;
+    }
+    #categories-section .cat-icon {
+      width: 40px !important;
+      height: 40px !important;
+      margin-bottom: 10px !important;
+    }
+    #categories-section .cat-icon span {
+      font-size: 20px !important;
+    }
+    #categories-section .cat-pill h3 {
+      font-size: 13px !important;
+    }
+    #categories-section .cat-pill p {
+      font-size: 11px !important;
+    }
+
+    /* FAQ header - stack vertikal */
+    #faq-section > div:first-child {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+    }
+
+    /* FAQ padding lebih kecil */
+    .faq-item .faq-btn { padding: 16px 0 !important; }
+    [style*="padding:0 24px"] { padding: 0 16px !important; }
+
+    /* Article cards grid - 1 kolom */
+    .article-cards-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Contact cards grid - 1 kolom */
+    .contact-cards-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Footer grid - 1 kolom */
+    .footer-grid {
+      grid-template-columns: 1fr !important;
+      gap: 24px !important;
+    }
+
+    /* Main padding lebih kecil */
+    main { padding: 36px 16px 60px !important; }
+
+    /* Hero padding lebih kecil */
+    .hero-inner { padding: 48px 20px 48px !important; }
+
+    /* Search placeholder teks diperpendek */
+    #search-input { font-size: 13px !important; }
+
+    /* Popular search wrap rapi */
+    .popular-searches { gap: 6px !important; }
+
+    /* Modal padding mobile */
+    #report-modal > div { padding: 24px 20px !important; border-radius: 20px !important; }
+
+    /* Contact section padding */
+    #contact-section [style*="border-radius:28px"] {
+      border-radius: 20px !important;
+    }
+  }
+
+  @media (max-width: 767px) {
+    /* Stats bar scroll horizontal → wrap */
+    .stats-bar-inner {
+      flex-wrap: wrap !important;
+      justify-content: center !important;
+      gap: 12px 24px !important;
+      padding: 14px 16px !important;
+    }
+
+    /* Navbar padding */
+    #navbar > div { padding: 0 16px !important; }
+  }
+
+  @media (min-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 2fr 1fr 1fr !important;
+    }
+  }
+    /* Tablet: category grid 3 kolom */
+    #categories-section .cat-grid {
+      grid-template-columns: repeat(3, 1fr) !important;
+    }
+
+    /* Article cards 2 kolom */
+    .article-cards-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+
+  /* Search input mobile fix */
+  @media (max-width: 639px) {
+    #search-input {
+      padding: 14px 44px 14px 44px !important;
+      font-size: 14px !important;
+    }
+    .hero-inner > div[style*="position:relative"] {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+  }
+    #navbar, #btt, #scroll-bar, .hero-bg form, #contact-section { display: none !important; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+    .faq-body { max-height: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Scroll progress -->
+<div id="scroll-bar"></div>
+
+<!-- Back to top -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Kembali ke atas">
+  <span class="material-symbols-outlined" style="font-size:20px;">arrow_upward</span>
+</button>
+
+<!-- Toast -->
+<div id="toast">
+  <span class="material-symbols-outlined" style="font-size:16px;" id="toast-icon">check_circle</span>
+  <span id="toast-msg">Berhasil!</span>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════ -->
+<header id="navbar">
+  <div style="max-width:1280px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+    <!-- Logo -->
+    <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;flex-shrink:0;">
+      <div style="width:32px;height:32px;background:#0A1628;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+        <span class="material-symbols-outlined" style="font-size:18px;color:white;">local_library</span>
+      </div>
+      <span style="font-family:'Newsreader',serif;font-size:1.1rem;font-weight:800;color:#0A1628;">PerpusDigital</span>
+    </a>
+
+    <!-- Nav links (desktop) -->
+    <nav style="display:flex;align-items:center;gap:4px;" class="hidden md:flex">
+      <a href="index.html" style="padding:8px 14px;border-radius:100px;font-size:13px;font-weight:600;color:#45474c;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='#f2ede5'" onmouseout="this.style.background='transparent'">Beranda</a>
+      <a href="index.html" onclick="setTimeout(()=>{document.querySelector('[onclick*=katalog]')?.click()},100)" style="padding:8px 14px;border-radius:100px;font-size:13px;font-weight:600;color:#45474c;text-decoration:none;transition:background .2s;" onmouseover="this.style.background='#f2ede5'" onmouseout="this.style.background='transparent'">Katalog</a>
+      <a href="pusat-bantuan.html" style="padding:8px 14px;border-radius:100px;font-size:13px;font-weight:700;color:#006b5f;text-decoration:none;background:#f2ede5;">Pusat Bantuan</a>
+    </nav>
+
+    <!-- Right buttons -->
+    <div style="display:flex;align-items:center;gap:8px;">
+      <a href="index.html" style="display:flex;align-items:center;gap:6px;text-decoration:none;color:#45474c;font-size:13px;font-weight:600;padding:8px 14px;border-radius:100px;transition:background .2s;" onmouseover="this.style.background='#f2ede5'" onmouseout="this.style.background='transparent'">
+        <span class="material-symbols-outlined" style="font-size:16px;">arrow_back</span>
+        <span style="display:none;" class="sm-show">Kembali</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════
+     HERO — SEARCH
+════════════════════════════════════════════ -->
+<section class="hero-bg">
+  <div class="dot-grid"></div>
+  <div class="hero-inner" style="max-width:760px;margin:0 auto;padding:72px 24px 64px;position:relative;z-index:1;text-align:center;">
+    <span class="chip" style="margin-bottom:20px;display:inline-flex;">
+      <span class="material-symbols-outlined" style="font-size:13px;">support_agent</span>
+      Pusat Bantuan
+    </span>
+    <h1 style="font-family:'Newsreader',serif;font-size:clamp(2rem,6vw,3.6rem);font-weight:800;color:white;line-height:1.12;margin-bottom:16px;">
+      Ada yang bisa kami<br>bantu hari ini?
+    </h1>
+    <p style="font-size:16px;color:rgba(255,255,255,.6);line-height:1.75;margin-bottom:36px;">
+      Temukan jawaban cepat melalui pencarian, atau jelajahi kategori topik di bawah.
+    </p>
+
+    <!-- Search bar -->
+    <div style="position:relative;max-width:540px;margin:0 auto 20px;">
+      <span class="material-symbols-outlined" style="position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:20px;color:#75777d;pointer-events:none;">search</span>
+      <input id="search-input" type="text" placeholder="Cari pertanyaan, topik, atau kata kunci…"
+        style="width:100%;padding:16px 52px 16px 52px;border-radius:100px;border:2px solid rgba(255,255,255,.12);background:rgba(255,255,255,.97);font-family:'Manrope',sans-serif;font-size:15px;color:#1d1c17;"
+        oninput="handleSearch(this.value)"/>
+      <button id="clear-btn" onclick="clearSearch()" style="display:none;position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#75777d;">
+        <span class="material-symbols-outlined" style="font-size:20px;">close</span>
+      </button>
+    </div>
+
+    <!-- Popular searches -->
+    <div class="popular-searches" style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;">
+      <span style="font-size:12px;color:rgba(255,255,255,.4);line-height:32px;">Populer:</span>
+      <button onclick="setSearch('cara membaca buku')" class="quick-tag" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);padding:6px 14px;border-radius:100px;font-size:12px;font-family:'Manrope',sans-serif;cursor:pointer;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">Cara membaca buku</button>
+      <button onclick="setSearch('lupa password')" class="quick-tag" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);padding:6px 14px;border-radius:100px;font-size:12px;font-family:'Manrope',sans-serif;cursor:pointer;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">Lupa password</button>
+      <button onclick="setSearch('hapus akun')" class="quick-tag" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);padding:6px 14px;border-radius:100px;font-size:12px;font-family:'Manrope',sans-serif;cursor:pointer;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">Hapus akun</button>
+      <button onclick="setSearch('unduh offline')" class="quick-tag" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);padding:6px 14px;border-radius:100px;font-size:12px;font-family:'Manrope',sans-serif;cursor:pointer;transition:background .2s;" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">Unduh offline</button>
+    </div>
+  </div>
+
+  <!-- Wave divider -->
+  <div style="overflow:hidden;line-height:0;margin-bottom:-2px;">
+    <svg viewBox="0 0 1440 48" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:48px;">
+      <path d="M0,32 C360,0 1080,64 1440,24 L1440,48 L0,48 Z" fill="#fef9f1"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     STATS BAR
+════════════════════════════════════════════ -->
+<div style="background:#f8f3eb;border-bottom:1px solid #ece8e0;">
+  <div class="stats-bar-inner" style="max-width:1280px;margin:0 auto;padding:16px 24px;display:flex;flex-wrap:wrap;justify-content:center;gap:32px;">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span class="material-symbols-outlined" style="font-size:20px;color:#006b5f;">help</span>
+      <span style="font-size:13px;font-weight:700;color:#0A1628;">48 Artikel Bantuan</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span class="material-symbols-outlined" style="font-size:20px;color:#006b5f;">timer</span>
+      <span style="font-size:13px;font-weight:700;color:#0A1628;">Respons rata-rata &lt; 24 jam</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span class="material-symbols-outlined" style="font-size:20px;color:#006b5f;">verified</span>
+      <span style="font-size:13px;font-weight:700;color:#0A1628;">98% masalah terselesaikan</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span class="material-symbols-outlined" style="font-size:20px;color:#006b5f;">groups</span>
+      <span style="font-size:13px;font-weight:700;color:#0A1628;">Tim dukungan aktif</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════════ -->
+<main style="max-width:1280px;margin:0 auto;padding:60px 24px 80px;">
+
+  <!-- ── Category grid ── -->
+  <section id="categories-section" style="margin-bottom:72px;">
+    <div style="text-align:center;margin-bottom:40px;" class="reveal">
+      <h2 style="font-family:'Newsreader',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;color:#0A1628;margin-bottom:10px;">Jelajahi Berdasarkan Topik</h2>
+      <p style="font-size:15px;color:#75777d;">Pilih kategori untuk menemukan artikel yang relevan</p>
+    </div>
+    <div class="cat-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;">
+
+      <div class="cat-pill active reveal reveal-d1" onclick="filterByCategory('semua')" style="background:white;border-radius:20px;padding:24px 20px;cursor:pointer;" data-cat="semua">
+        <div class="cat-icon" style="width:48px;height:48px;background:#f2ede5;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;transition:all .2s;">
+          <span class="material-symbols-outlined" style="font-size:24px;color:#0A1628;">apps</span>
+        </div>
+        <h3 style="font-size:15px;font-weight:700;color:#0A1628;margin-bottom:4px;">Semua Topik</h3>
+        <p style="font-size:12px;color:#75777d;">48 artikel</p>
+      </div>
+
+      <div class="cat-pill reveal reveal-d1" onclick="filterByCategory('akun')" style="background:white;border-radius:20px;padding:24px 20px;" data-cat="akun">
+        <div class="cat-icon" style="width:48px;height:48px;background:#f2ede5;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;transition:all .2s;">
+          <span class="material-symbols-outlined" style="font-size:24px;color:#0A1628;">manage_accounts</span>
+        </div>
+        <h3 style="font-size:15px;font-weight:700;color:#0A1628;margin-bottom:4px;">Akun & Profil</h3>
+        <p style="font-size:12px;color:#75777d;">12 artikel</p>
+      </div>
+
+      <div class="cat-pill reveal reveal-d2" onclick="filterByCategory('membaca')" style="background:white;border-radius:20px;padding:24px 20px;" data-cat="membaca">
+        <div class="cat-icon" style="width:48px;height:48px;background:#f2ede5;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;transition:all .2s;">
+          <span class="material-symbols-outlined" style="font-size:24px;color:#0A1628;">menu_book</span>
+        </div>
+        <h3 style="font-size:15px;font-weight:700;color:#0A1628;margin-bottom:4px;">Membaca & Reader</h3>
+        <p style="font-size:12px;color:#75777d;">10 artikel</p>
+      </div>
+
+      <div class="cat-pill reveal reveal-d2" onclick="filterByCategory('koleksi')" style="background:white;border-radius:20px;padding:24px 20px;" data-cat="koleksi">
+        <div class="cat-icon" style="width:48px;height:48px;background:#f2ede5;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;transition:all .2s;">
+          <span class="material-symbols-outlined" style="font-size:24px;color:#0A1628;">collections_bookmark</span>
+        </div>
+        <h3 style="font-size:15px;font-weight:700;color:#0A1628;margin-bottom:4px;">Koleksi & Favorit</h3>
+        <p style="font-size:12px;color:#75777d;">8 artikel</p>
+      </div>
+
+      <div class="cat-pill reveal reveal-d3" onclick="filterByCategory('teknis')" style="background:white;border-radius:20px;padding:24px 20px;" data-cat="teknis">
+        <div class="cat-icon" style="width:48px;height:48px;background:#f2ede5;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;transition:all .2s;">
+          <span class="material-symbols-outlined" style="font-size:24px;color:#0A1628;">build</span>
+        </div>
+        <h3 style="font-size:15px;font-weight:700;color:#0A1628;margin-bottom:4px;">Masalah Teknis</h3>
+        <p style="font-size:12px;color:#75777d;">9 artikel</p>
+      </div>
+
+      <div class="cat-pill reveal reveal-d3" onclick="filterByCategory('privasi')" style="background:white;border-radius:20px;padding:24px 20px;" data-cat="privasi">
+        <div class="cat-icon" style="width:48px;height:48px;background:#f2ede5;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;transition:all .2s;">
+          <span class="material-symbols-outlined" style="font-size:24px;color:#0A1628;">shield</span>
+        </div>
+        <h3 style="font-size:15px;font-weight:700;color:#0A1628;margin-bottom:4px;">Privasi & Keamanan</h3>
+        <p style="font-size:12px;color:#75777d;">9 artikel</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FAQ / Articles ── -->
+  <section id="faq-section" style="margin-bottom:72px;">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:36px;" class="reveal">
+      <div>
+        <h2 id="faq-heading" style="font-family:'Newsreader',serif;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:#0A1628;margin-bottom:6px;">Pertanyaan yang Sering Diajukan</h2>
+        <p id="faq-sub" style="font-size:14px;color:#75777d;">Jawaban untuk pertanyaan paling umum dari pengguna kami</p>
+      </div>
+      <span id="faq-count" style="font-size:12px;font-weight:700;color:#75777d;background:#f2ede5;padding:6px 14px;border-radius:100px;">Menampilkan semua</span>
+    </div>
+
+    <!-- No results -->
+    <div id="no-results">
+      <div style="width:64px;height:64px;background:#f2ede5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+        <span class="material-symbols-outlined" style="font-size:32px;color:#75777d;">search_off</span>
+      </div>
+      <p style="font-size:16px;font-weight:700;color:#0A1628;margin-bottom:8px;">Tidak ada hasil ditemukan</p>
+      <p style="font-size:14px;color:#75777d;">Coba kata kunci lain atau <button onclick="clearSearch()" style="background:none;border:none;color:#006b5f;font-weight:700;cursor:pointer;font-family:'Manrope',sans-serif;font-size:14px;">lihat semua artikel</button></p>
+    </div>
+
+    <!-- FAQ Container -->
+    <div id="faq-container">
+
+      <!-- ── AKUN & PROFIL ── -->
+      <div class="faq-group" data-group="akun">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;padding-top:8px;">
+          <div style="width:32px;height:32px;background:#0A1628;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+            <span class="material-symbols-outlined" style="font-size:16px;color:white;">manage_accounts</span>
+          </div>
+          <h3 style="font-family:'Newsreader',serif;font-size:1.15rem;font-weight:700;color:#0A1628;">Akun &amp; Profil</h3>
+        </div>
+        <div style="background:white;border-radius:20px;padding:0 24px;margin-bottom:32px;border:1px solid #ece8e0;">
+
+          <div class="faq-item" data-tags="daftar akun baru registrasi bergabung">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Bagaimana cara mendaftar akun baru di PerpusDigital?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;margin-bottom:12px;">Mendaftar di PerpusDigital sangat mudah. Ikuti langkah berikut:</p>
+              <ol style="font-size:14px;color:#45474c;line-height:1.85;padding-left:20px;display:flex;flex-direction:column;gap:6px;">
+                <li>Klik tombol <strong>"Daftar"</strong> di pojok kanan atas halaman utama.</li>
+                <li>Isi nama lengkap, alamat email aktif, dan kata sandi yang kuat.</li>
+                <li>Centang persetujuan Syarat &amp; Ketentuan, lalu klik <strong>"Buat Akun"</strong>.</li>
+                <li>Cek kotak masuk email Anda untuk tautan verifikasi.</li>
+                <li>Klik tautan tersebut dan akun Anda langsung aktif!</li>
+              </ol>
+              <div style="margin-top:16px;padding:12px 16px;background:#f8f3eb;border-radius:10px;display:flex;gap:10px;">
+                <span class="material-symbols-outlined" style="font-size:16px;color:#755b00;flex-shrink:0;margin-top:1px;">lightbulb</span>
+                <p style="font-size:13px;color:#45474c;margin:0;">Gunakan email aktif yang Anda akses secara rutin untuk memastikan notifikasi terkirim dengan baik.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-tags="lupa password reset kata sandi masuk login">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Saya lupa kata sandi. Bagaimana cara mengatur ulangnya?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;margin-bottom:12px;">Untuk mengatur ulang kata sandi Anda:</p>
+              <ol style="font-size:14px;color:#45474c;line-height:1.85;padding-left:20px;display:flex;flex-direction:column;gap:6px;">
+                <li>Klik <strong>"Masuk"</strong> lalu pilih <strong>"Lupa Kata Sandi?"</strong>.</li>
+                <li>Masukkan alamat email yang terdaftar di akun Anda.</li>
+                <li>Kami akan mengirimkan tautan reset ke email tersebut dalam 1–5 menit.</li>
+                <li>Klik tautan di email, lalu masukkan kata sandi baru Anda.</li>
+              </ol>
+              <p style="font-size:14px;color:#45474c;line-height:1.85;margin-top:12px;">Jika email tidak masuk, cek folder Spam atau Promosi. Tautan berlaku selama <strong>30 menit</strong>.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-tags="ubah email nama profil edit akun">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Bisakah saya mengubah nama atau email profil saya?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;">Ya, Anda bisa mengubah nama tampilan kapan saja melalui menu <strong>Dashboard → Profil → Edit Profil</strong>. Untuk perubahan alamat email, diperlukan verifikasi ulang ke email baru. Proses ini memastikan keamanan akun Anda tetap terjaga.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-tags="hapus akun tutup nonaktif">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Bagaimana cara menghapus atau menutup akun?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;margin-bottom:12px;">Anda dapat menghapus akun melalui <strong>Dashboard → Pengaturan → Hapus Akun</strong>. Perlu diperhatikan:</p>
+              <ul style="font-size:14px;color:#45474c;line-height:1.85;padding-left:20px;display:flex;flex-direction:column;gap:6px;">
+                <li>Semua data termasuk progres membaca dan favorit akan terhapus permanen.</li>
+                <li>Proses penghapusan memerlukan konfirmasi via email.</li>
+                <li>Data tidak dapat dipulihkan setelah 30 hari masa penangguhan.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /akun -->
+
+      <!-- ── MEMBACA & READER ── -->
+      <div class="faq-group" data-group="membaca">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;padding-top:8px;">
+          <div style="width:32px;height:32px;background:#0A1628;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+            <span class="material-symbols-outlined" style="font-size:16px;color:white;">menu_book</span>
+          </div>
+          <h3 style="font-family:'Newsreader',serif;font-size:1.15rem;font-weight:700;color:#0A1628;">Membaca &amp; Reader</h3>
+        </div>
+        <div style="background:white;border-radius:20px;padding:0 24px;margin-bottom:32px;border:1px solid #ece8e0;">
+
+          <div class="faq-item" data-tags="cara membaca buku buka reader mulai">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Bagaimana cara mulai membaca buku di PerpusDigital?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;margin-bottom:12px;">Untuk mulai membaca:</p>
+              <ol style="font-size:14px;color:#45474c;line-height:1.85;padding-left:20px;display:flex;flex-direction:column;gap:6px;">
+                <li>Temukan buku yang ingin dibaca melalui <strong>Katalog</strong> atau halaman utama.</li>
+                <li>Klik judul buku untuk membuka halaman detail.</li>
+                <li>Klik tombol <strong>"Mulai Membaca"</strong> yang berwarna hijau.</li>
+                <li>Reader akan terbuka dengan konten bab pertama.</li>
+              </ol>
+              <p style="font-size:14px;color:#45474c;line-height:1.85;margin-top:12px;">Progres membaca Anda tersimpan otomatis dan dapat dilanjutkan kapan saja.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-tags="ukuran font huruf teks besar kecil reader">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Bisakah saya mengubah ukuran teks saat membaca?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;">Ya! Di bagian atas reader terdapat tombol <strong>A−</strong> dan <strong>A+</strong> untuk memperkecil atau memperbesar ukuran teks sesuai kenyamanan membaca Anda. Pengaturan ini berlaku selama sesi membaca aktif.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-tags="progres membaca simpan lanjut bab chapter">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Apakah progres membaca saya tersimpan otomatis?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;">Ya, progres membaca disimpan secara otomatis setiap kali Anda berpindah bab atau menutup reader. Anda dapat melanjutkan membaca dari posisi terakhir kapan saja dan dari perangkat manapun, selama menggunakan akun yang sama.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-tags="unduh offline download baca tanpa internet">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Apakah saya bisa membaca buku secara offline?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;">Saat ini fitur baca offline masih dalam pengembangan dan akan segera hadir. Platform kami saat ini memerlukan koneksi internet untuk memuat konten. Pantau halaman ini atau aktifkan notifikasi untuk mendapatkan kabar terbaru tentang fitur ini.</p>
+              <div style="margin-top:14px;padding:12px 16px;background:#f8f3eb;border-radius:10px;display:flex;gap:10px;">
+                <span class="material-symbols-outlined" style="font-size:16px;color:#755b00;flex-shrink:0;margin-top:1px;">construction</span>
+                <p style="font-size:13px;color:#45474c;margin:0;">Fitur unduh offline dijadwalkan hadir pada Q3 2025.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /membaca -->
+
+      <!-- ── KOLEKSI & FAVORIT ── -->
+      <div class="faq-group" data-group="koleksi">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;padding-top:8px;">
+          <div style="width:32px;height:32px;background:#0A1628;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+            <span class="material-symbols-outlined" style="font-size:16px;color:white;">collections_bookmark</span>
+          </div>
+          <h3 style="font-family:'Newsreader',serif;font-size:1.15rem;font-weight:700;color:#0A1628;">Koleksi &amp; Favorit</h3>
+        </div>
+        <div style="background:white;border-radius:20px;padding:0 24px;margin-bottom:32px;border:1px solid #ece8e0;">
+
+          <div class="faq-item" data-tags="tambah favorit simpan buku like suka">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Bagaimana cara menambah buku ke Favorit?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;">Klik tombol <strong>❤ Favorit</strong> yang ada di bawah setiap kartu buku pada halaman Katalog atau halaman detail buku. Buku akan tersimpan di Dashboard Anda pada tab <strong>"Favorit"</strong> untuk akses cepat di kemudian hari.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-tags="hapus favorit keluar koleksi batal">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Bagaimana cara menghapus buku dari Favorit?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;">Klik kembali tombol ❤ yang sudah berwarna merah pada buku yang ingin dihapus, atau buka Dashboard → Favorit → klik ikon hapus di sudut kartu buku.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-tags="batas maksimum berapa buku favorit limit">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Berapa banyak buku yang bisa saya simpan di Favorit?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;">Tidak ada batasan jumlah buku yang dapat disimpan di Favorit. Anda bisa menyimpan seluruh koleksi kami jika mau! Daftar favorit akan terus tersinkronisasi di semua perangkat Anda.</p>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /koleksi -->
+
+      <!-- ── MASALAH TEKNIS ── -->
+      <div class="faq-group" data-group="teknis">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;padding-top:8px;">
+          <div style="width:32px;height:32px;background:#0A1628;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+            <span class="material-symbols-outlined" style="font-size:16px;color:white;">build</span>
+          </div>
+          <h3 style="font-family:'Newsreader',serif;font-size:1.15rem;font-weight:700;color:#0A1628;">Masalah Teknis</h3>
+        </div>
+        <div style="background:white;border-radius:20px;padding:0 24px;margin-bottom:32px;border:1px solid #ece8e0;">
+
+          <div class="faq-item" data-tags="buku tidak muncul gagal loading error tampil">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Buku tidak tampil atau halaman error saat dibuka. Apa yang harus dilakukan?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;margin-bottom:12px;">Coba langkah berikut secara berurutan:</p>
+              <ol style="font-size:14px;color:#45474c;line-height:1.85;padding-left:20px;display:flex;flex-direction:column;gap:6px;">
+                <li>Muat ulang halaman (<strong>Ctrl+R</strong> atau tarik ke bawah di mobile).</li>
+                <li>Periksa koneksi internet Anda.</li>
+                <li>Hapus cache dan cookie browser (<strong>Ctrl+Shift+Delete</strong>).</li>
+                <li>Coba buka di browser lain (Chrome, Firefox, atau Safari).</li>
+                <li>Jika masih bermasalah, hubungi tim kami dengan menyertakan nama buku dan tangkapan layar error.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="faq-item" data-tags="lambat loading lama berat website performa">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Website terasa lambat atau tidak responsif</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;">Kecepatan website dapat dipengaruhi oleh koneksi internet, beban server, atau ekstensi browser. Coba nonaktifkan ekstensi browser sementara, gunakan koneksi yang lebih stabil, atau akses pada jam non-sibuk. Anda juga bisa coba mode Incognito untuk mengisolasi masalah ekstensi.</p>
+            </div>
+          </div>
+
+          <div class="faq-item" data-tags="browser support kompatibel chrome firefox safari edge">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Browser apa saja yang didukung oleh PerpusDigital?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;margin-bottom:12px;">PerpusDigital mendukung browser modern terbaru:</p>
+              <div style="display:flex;flex-wrap:wrap;gap:10px;">
+                <span style="background:#f2ede5;padding:6px 14px;border-radius:100px;font-size:13px;font-weight:600;color:#0A1628;">✓ Google Chrome 90+</span>
+                <span style="background:#f2ede5;padding:6px 14px;border-radius:100px;font-size:13px;font-weight:600;color:#0A1628;">✓ Mozilla Firefox 88+</span>
+                <span style="background:#f2ede5;padding:6px 14px;border-radius:100px;font-size:13px;font-weight:600;color:#0A1628;">✓ Safari 14+</span>
+                <span style="background:#f2ede5;padding:6px 14px;border-radius:100px;font-size:13px;font-weight:600;color:#0A1628;">✓ Microsoft Edge 90+</span>
+              </div>
+              <p style="font-size:14px;color:#45474c;line-height:1.85;margin-top:12px;">Internet Explorer tidak didukung. Disarankan selalu memperbarui browser ke versi terbaru.</p>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /teknis -->
+
+      <!-- ── PRIVASI & KEAMANAN ── -->
+      <div class="faq-group" data-group="privasi">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;padding-top:8px;">
+          <div style="width:32px;height:32px;background:#0A1628;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+            <span class="material-symbols-outlined" style="font-size:16px;color:white;">shield</span>
+          </div>
+          <h3 style="font-family:'Newsreader',serif;font-size:1.15rem;font-weight:700;color:#0A1628;">Privasi &amp; Keamanan</h3>
+        </div>
+        <div style="background:white;border-radius:20px;padding:0 24px;margin-bottom:32px;border:1px solid #ece8e0;">
+
+          <div class="faq-item" data-tags="data privasi aman jual pihak ketiga informasi">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Apakah data pribadi saya aman di PerpusDigital?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;margin-bottom:12px;">Keamanan data Anda adalah prioritas utama kami. Langkah perlindungan yang kami terapkan:</p>
+              <ul style="font-size:14px;color:#45474c;line-height:1.85;padding-left:20px;display:flex;flex-direction:column;gap:6px;">
+                <li>Enkripsi data menggunakan protokol <strong>HTTPS/SSL</strong>.</li>
+                <li>Kata sandi disimpan dalam format <strong>hash terenkripsi</strong>, tidak dapat dibaca siapapun.</li>
+                <li>Kami <strong>tidak menjual</strong> data pribadi Anda kepada pihak ketiga.</li>
+                <li>Akses data dibatasi hanya untuk tim yang berwenang.</li>
+              </ul>
+              <div style="margin-top:14px;">
+                <a href="kebijakan-privasi.html" style="display:inline-flex;align-items:center;gap:6px;color:#006b5f;font-size:13px;font-weight:700;text-decoration:none;">
+                  <span class="material-symbols-outlined" style="font-size:15px;">open_in_new</span> Baca Kebijakan Privasi lengkap
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-tags="akun dibajak diretas tidak aman keamanan curiga">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Saya curiga akun saya diakses orang lain. Apa yang harus dilakukan?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;margin-bottom:12px;">Segera lakukan langkah berikut:</p>
+              <ol style="font-size:14px;color:#45474c;line-height:1.85;padding-left:20px;display:flex;flex-direction:column;gap:6px;">
+                <li><strong>Ganti kata sandi</strong> segera melalui menu Profil → Keamanan.</li>
+                <li>Periksa dan cabut akses perangkat yang tidak dikenal.</li>
+                <li>Hubungi tim kami di <strong>security@perpusdigital.id</strong> untuk investigasi lebih lanjut.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="faq-item" data-tags="cookie pelacak tracking hapus">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span style="font-size:15px;font-weight:600;color:#0A1628;line-height:1.5;">Apakah PerpusDigital menggunakan cookie?</span>
+              <span class="faq-icon"><span class="material-symbols-outlined" style="font-size:16px;">add</span></span>
+            </button>
+            <div class="faq-body">
+              <p style="font-size:14px;color:#45474c;line-height:1.85;">Ya, kami menggunakan cookie esensial untuk menjaga sesi login Anda tetap aktif, serta cookie analitik anonim untuk memahami cara pengguna berinteraksi dengan platform (tanpa mengidentifikasi individu). Anda dapat mengelola preferensi cookie melalui pengaturan browser Anda.</p>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- /privasi -->
+
+    </div><!-- /faq-container -->
+  </section>
+
+  <!-- ── ARTIKEL TERPOPULER ── -->
+  <section id="articles-section" style="margin-bottom:72px;">
+    <div style="text-align:center;margin-bottom:40px;" class="reveal">
+      <h2 style="font-family:'Newsreader',serif;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;color:#0A1628;margin-bottom:10px;">Panduan Cepat</h2>
+      <p style="font-size:15px;color:#75777d;">Artikel yang paling sering dibaca oleh pengguna kami</p>
+    </div>
+    <div class="article-cards-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;">
+
+      <div class="article-card reveal reveal-d1" style="background:white;border-radius:20px;padding:28px;border:1px solid #ece8e0;cursor:pointer;" onclick="setSearch('cara membaca buku')">
+        <div style="width:44px;height:44px;background:#f2ede5;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="font-size:22px;color:#006b5f;">play_circle</span>
+        </div>
+        <h3 style="font-family:'Newsreader',serif;font-size:1.05rem;font-weight:700;color:#0A1628;margin-bottom:8px;line-height:1.4;">Panduan Memulai: Cara Membaca Buku</h3>
+        <p style="font-size:13px;color:#75777d;line-height:1.7;margin-bottom:16px;">Langkah demi langkah untuk membuka dan menjelajahi buku pertama Anda.</p>
+        <span style="font-size:12px;font-weight:700;color:#006b5f;display:flex;align-items:center;gap:4px;">
+          Baca panduan <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+        </span>
+      </div>
+
+      <div class="article-card reveal reveal-d2" style="background:white;border-radius:20px;padding:28px;border:1px solid #ece8e0;cursor:pointer;" onclick="setSearch('lupa password')">
+        <div style="width:44px;height:44px;background:#f2ede5;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="font-size:22px;color:#006b5f;">lock_reset</span>
+        </div>
+        <h3 style="font-family:'Newsreader',serif;font-size:1.05rem;font-weight:700;color:#0A1628;margin-bottom:8px;line-height:1.4;">Reset Kata Sandi dalam 3 Langkah</h3>
+        <p style="font-size:13px;color:#75777d;line-height:1.7;margin-bottom:16px;">Cara cepat mendapatkan kembali akses ke akun PerpusDigital Anda.</p>
+        <span style="font-size:12px;font-weight:700;color:#006b5f;display:flex;align-items:center;gap:4px;">
+          Baca panduan <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+        </span>
+      </div>
+
+      <div class="article-card reveal reveal-d3" style="background:white;border-radius:20px;padding:28px;border:1px solid #ece8e0;cursor:pointer;" onclick="setSearch('tambah favorit')">
+        <div style="width:44px;height:44px;background:#f2ede5;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="font-size:22px;color:#006b5f;">favorite</span>
+        </div>
+        <h3 style="font-family:'Newsreader',serif;font-size:1.05rem;font-weight:700;color:#0A1628;margin-bottom:8px;line-height:1.4;">Mengelola Koleksi Buku Favorit</h3>
+        <p style="font-size:13px;color:#75777d;line-height:1.7;margin-bottom:16px;">Cara menyimpan, mengatur, dan mengakses daftar bacaan favorit Anda.</p>
+        <span style="font-size:12px;font-weight:700;color:#006b5f;display:flex;align-items:center;gap:4px;">
+          Baca panduan <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+        </span>
+      </div>
+
+      <div class="article-card reveal reveal-d4" style="background:white;border-radius:20px;padding:28px;border:1px solid #ece8e0;cursor:pointer;" onclick="setSearch('browser support')">
+        <div style="width:44px;height:44px;background:#f2ede5;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <span class="material-symbols-outlined" style="font-size:22px;color:#006b5f;">devices</span>
+        </div>
+        <h3 style="font-family:'Newsreader',serif;font-size:1.05rem;font-weight:700;color:#0A1628;margin-bottom:8px;line-height:1.4;">Perangkat &amp; Browser yang Didukung</h3>
+        <p style="font-size:13px;color:#75777d;line-height:1.7;margin-bottom:16px;">Daftar lengkap perangkat dan browser yang kompatibel dengan platform kami.</p>
+        <span style="font-size:12px;font-weight:700;color:#006b5f;display:flex;align-items:center;gap:4px;">
+          Baca panduan <span class="material-symbols-outlined" style="font-size:14px;">arrow_forward</span>
+        </span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── CONTACT US ── -->
+  <section id="contact-section">
+    <div style="background:#0A1628;border-radius:28px;padding:clamp(32px,5vw,64px);position:relative;overflow:hidden;" class="reveal">
+      <!-- Decorative -->
+      <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(255,255,255,.06);"></div>
+      <div style="position:absolute;bottom:-60px;left:5%;width:160px;height:160px;border-radius:50%;border:1px solid rgba(255,255,255,.04);"></div>
+
+      <div style="position:relative;z-index:1;text-align:center;margin-bottom:48px;">
+        <h2 style="font-family:'Newsreader',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;color:white;margin-bottom:12px;">Tidak menemukan jawaban?</h2>
+        <p style="font-size:15px;color:rgba(255,255,255,.6);max-width:480px;margin:0 auto;line-height:1.75;">Tim kami siap membantu. Pilih saluran komunikasi yang paling nyaman untuk Anda.</p>
+      </div>
+
+      <div class="contact-cards-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;position:relative;z-index:1;">
+
+        <!-- Email -->
+        <div class="contact-card" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;text-align:center;cursor:pointer;" onclick="showToast('Email bantuan@perpusdigital.id disalin!','mail')">
+          <div style="width:52px;height:52px;background:rgba(255,255,255,.1);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+            <span class="material-symbols-outlined" style="font-size:26px;color:#95f0df;">mail</span>
+          </div>
+          <h3 style="font-size:15px;font-weight:700;color:white;margin-bottom:6px;">Email Dukungan</h3>
+          <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:12px;line-height:1.6;">Respons dalam 24 jam kerja</p>
+          <span style="font-size:13px;font-weight:700;color:#95f0df;">bantuan@perpusdigital.id</span>
+        </div>
+
+        <!-- Live Chat -->
+        <div class="contact-card" style="background:rgba(0,107,95,.3);border:1px solid rgba(0,107,95,.5);border-radius:20px;padding:28px 24px;text-align:center;cursor:pointer;position:relative;" onclick="showToast('Fitur live chat segera hadir!','chat')">
+          <div style="position:absolute;top:16px;right:16px;background:#006b5f;color:white;font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;letter-spacing:.04em;">SEGERA</div>
+          <div style="width:52px;height:52px;background:rgba(0,107,95,.4);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+            <span class="material-symbols-outlined" style="font-size:26px;color:#95f0df;">chat</span>
+          </div>
+          <h3 style="font-size:15px;font-weight:700;color:white;margin-bottom:6px;">Live Chat</h3>
+          <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:12px;line-height:1.6;">Obrolan langsung dengan tim kami</p>
+          <span style="font-size:13px;font-weight:700;color:#95f0df;">Senin – Jumat, 09.00–17.00</span>
+        </div>
+
+        <!-- Report -->
+        <div class="contact-card" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:28px 24px;text-align:center;cursor:pointer;" onclick="openReportForm()">
+          <div style="width:52px;height:52px;background:rgba(255,255,255,.1);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+            <span class="material-symbols-outlined" style="font-size:26px;color:#ffe08e;">flag</span>
+          </div>
+          <h3 style="font-size:15px;font-weight:700;color:white;margin-bottom:6px;">Laporkan Masalah</h3>
+          <p style="font-size:13px;color:rgba(255,255,255,.5);margin-bottom:12px;line-height:1.6;">Bug, konten, atau pelanggaran</p>
+          <span style="font-size:13px;font-weight:700;color:#ffe08e;">Kirim laporan</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════
+     REPORT MODAL
+════════════════════════════════════════════ -->
+<div id="report-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fef9f1;border-radius:24px;padding:36px;max-width:480px;width:100%;position:relative;animation:slideUp .3s ease;max-height:90vh;overflow-y:auto;">
+    <button onclick="closeReportForm()" style="position:absolute;top:16px;right:16px;background:#f2ede5;border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;">
+      <span class="material-symbols-outlined" style="font-size:16px;">close</span>
+    </button>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;">
+      <div style="width:44px;height:44px;background:#0A1628;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span class="material-symbols-outlined" style="font-size:22px;color:white;">flag</span>
+      </div>
+      <div>
+        <h3 style="font-family:'Newsreader',serif;font-size:1.3rem;font-weight:800;color:#0A1628;margin-bottom:2px;">Kirim Laporan</h3>
+        <p style="font-size:12px;color:#75777d;">Kami akan merespons dalam 24 jam kerja</p>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div>
+        <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#75777d;display:block;margin-bottom:6px;">Jenis Laporan *</label>
+        <select id="report-type" style="width:100%;background:#f2ede5;border:none;border-radius:12px;padding:12px 16px;font-family:'Manrope',sans-serif;font-size:14px;color:#1d1c17;outline:none;cursor:pointer;appearance:none;">
+          <option value="">-- Pilih jenis masalah --</option>
+          <option value="bug">Bug / Error teknis</option>
+          <option value="konten">Konten tidak sesuai</option>
+          <option value="pelanggaran">Pelanggaran ketentuan</option>
+          <option value="akun">Masalah akun</option>
+          <option value="lainnya">Lainnya</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#75777d;display:block;margin-bottom:6px;">Email Anda *</label>
+        <input id="report-email" type="email" placeholder="email@contoh.com" style="width:100%;background:#f2ede5;border:none;border-radius:12px;padding:12px 16px;font-family:'Manrope',sans-serif;font-size:14px;color:#1d1c17;outline:none;"/>
+      </div>
+      <div>
+        <label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#75777d;display:block;margin-bottom:6px;">Deskripsi Masalah *</label>
+        <textarea id="report-desc" rows="4" placeholder="Jelaskan masalah yang Anda alami secara detail…" style="width:100%;background:#f2ede5;border:none;border-radius:12px;padding:12px 16px;font-family:'Manrope',sans-serif;font-size:14px;color:#1d1c17;outline:none;resize:none;"></textarea>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:12px;margin-top:24px;">
+      <button onclick="closeReportForm()" style="flex:1;padding:13px;background:#f2ede5;color:#0A1628;border:none;border-radius:100px;font-family:'Manrope',sans-serif;font-weight:700;font-size:14px;cursor:pointer;">Batal</button>
+      <button onclick="submitReport()" style="flex:2;padding:13px;background:#006b5f;color:white;border:none;border-radius:100px;font-family:'Manrope',sans-serif;font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;">
+        <span class="material-symbols-outlined" style="font-size:16px;">send</span> Kirim Laporan
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer style="background:#fef9f1;border-top:1px solid #ece8e0;padding:40px 24px 48px;">
+  <div class="footer-grid" style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:32px;" class="md:grid-cols-3">
+    <div>
+      <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;margin-bottom:12px;">
+        <div style="width:28px;height:28px;background:#0A1628;border-radius:6px;display:flex;align-items:center;justify-content:center;">
+          <span class="material-symbols-outlined" style="font-size:16px;color:white;">local_library</span>
+        </div>
+        <span style="font-family:'Newsreader',serif;font-size:1rem;font-weight:800;color:#0A1628;">PerpusDigital</span>
+      </a>
+      <p style="font-size:12px;color:#75777d;line-height:1.8;max-width:280px;">The Digital Curator Archive. Menyediakan akses tanpa batas ke ribuan literasi pilihan untuk masa depan yang lebih cerdas.</p>
+    </div>
+    <div>
+      <h5 style="font-size:11px;font-weight:700;color:#0A1628;text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;">Tautan Cepat</h5>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="index.html" style="font-size:12px;text-transform:uppercase;color:#75777d;text-decoration:none;font-weight:600;transition:color .2s;" onmouseover="this.style.color='#0A1628'" onmouseout="this.style.color='#75777d'">Tentang Kami</a>
+        <a href="pusat-bantuan.html" style="font-size:12px;text-transform:uppercase;color:#006b5f;text-decoration:none;font-weight:700;">Pusat Bantuan ←</a>
+        <a href="kebijakan-privasi.html" style="font-size:12px;text-transform:uppercase;color:#75777d;text-decoration:none;font-weight:600;transition:color .2s;" onmouseover="this.style.color='#0A1628'" onmouseout="this.style.color='#75777d'">Kebijakan Privasi</a>
+        <a href="syarat-ketentuan.html" style="font-size:12px;text-transform:uppercase;color:#75777d;text-decoration:none;font-weight:600;transition:color .2s;" onmouseover="this.style.color='#0A1628'" onmouseout="this.style.color='#75777d'">Syarat &amp; Ketentuan</a>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex;gap:12px;margin-bottom:24px;">
+        <a style="width:36px;height:36px;border-radius:50%;background:#f2ede5;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s;" onmouseover="this.style.background='#0A1628';this.querySelector('span').style.color='white'" onmouseout="this.style.background='#f2ede5';this.querySelector('span').style.color=''">
+          <span class="material-symbols-outlined" style="font-size:16px;">language</span>
+        </a>
+        <a href="mailto:bantuan@perpusdigital.id" style="width:36px;height:36px;border-radius:50%;background:#f2ede5;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s;" onmouseover="this.style.background='#0A1628';this.querySelector('span').style.color='white'" onmouseout="this.style.background='#f2ede5';this.querySelector('span').style.color=''">
+          <span class="material-symbols-outlined" style="font-size:16px;">mail</span>
+        </a>
+      </div>
+      <p style="font-size:12px;color:#75777d;">© 2025 PerpusDigital by Wilbertlabs.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+@keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
+@media (min-width:640px) { .sm-show { display:inline !important; } }
+</style>
+
+<script>
+// ── DATA: semua FAQ ──
+const allFaqs = document.querySelectorAll('.faq-item');
+const allGroups = document.querySelectorAll('.faq-group');
+
+// ── Scroll progress + back-to-top ──
+window.addEventListener('scroll', () => {
+  const p = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  document.getElementById('scroll-bar').style.width = (p * 100) + '%';
+  const btt = document.getElementById('btt');
+  btt.classList.toggle('show', window.scrollY > 400);
+});
+
+// ── Reveal on scroll ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── FAQ toggle ──
+function toggleFaq(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  // Close all in same container
+  btn.closest('.bg-white, [style*="background:white"]')?.querySelectorAll('.faq-body').forEach(b => {
+    b.classList.remove('open');
+    b.previousElementSibling.classList.remove('open');
+  });
+  if (!isOpen) { body.classList.add('open'); btn.classList.add('open'); }
+}
+
+// ── Category filter ──
+function filterByCategory(cat) {
+  // Update pills
+  document.querySelectorAll('.cat-pill').forEach(p => {
+    const active = p.dataset.cat === cat;
+    p.classList.toggle('active', active);
+    // Update background card
+    p.style.background = active ? '#0A1628' : 'white';
+
+    const icon = p.querySelector('.cat-icon');
+    if (icon) {
+      icon.style.background = active ? 'rgba(255,255,255,.15)' : '#f2ede5';
+      icon.querySelector('span').style.color = active ? 'white' : '#0A1628';
+    }
+    const heading = p.querySelector('h3');
+    if (heading) heading.style.color = active ? 'white' : '#0A1628';
+    const para = p.querySelector('p');
+    if (para) para.style.color = active ? 'rgba(255,255,255,.6)' : '#75777d';
+  });
+
+  // Show/hide groups
+  allGroups.forEach(g => {
+    const show = cat === 'semua' || g.dataset.group === cat;
+    g.style.display = show ? '' : 'none';
+  });
+
+  // Update heading
+  const labels = {
+    semua: 'Pertanyaan yang Sering Diajukan',
+    akun: 'Akun & Profil',
+    membaca: 'Membaca & Reader',
+    koleksi: 'Koleksi & Favorit',
+    teknis: 'Masalah Teknis',
+    privasi: 'Privasi & Keamanan'
+  };
+  document.getElementById('faq-heading').textContent = labels[cat] || 'Pertanyaan';
+
+  clearSearch();
+  document.getElementById('faq-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Search ──
+let searchTimeout;
+function handleSearch(val) {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => doSearch(val), 200);
+  document.getElementById('clear-btn').style.display = val ? '' : 'none';
+}
+
+function doSearch(val) {
+  const q = val.trim().toLowerCase();
+  let visibleCount = 0;
+
+  // Reset all groups visible
+  allGroups.forEach(g => g.style.display = '');
+
+  if (!q) {
+    allFaqs.forEach(f => f.style.display = '');
+    // Restore question text (remove marks)
+    allFaqs.forEach(f => {
+      const btn = f.querySelector('.faq-btn span:first-child');
+      btn.innerHTML = btn.textContent;
+    });
+    document.getElementById('no-results').style.display = 'none';
+    document.getElementById('faq-count').textContent = 'Menampilkan semua';
+    return;
+  }
+
+  allFaqs.forEach(f => {
+    const tags = f.dataset.tags || '';
+    const btnSpan = f.querySelector('.faq-btn span:first-child');
+    const text = btnSpan.textContent.toLowerCase();
+    const bodyText = f.querySelector('.faq-body')?.textContent.toLowerCase() || '';
+    const match = text.includes(q) || tags.includes(q) || bodyText.includes(q);
+
+    f.style.display = match ? '' : 'none';
+    if (match) {
+      visibleCount++;
+      // Highlight
+      const raw = btnSpan.textContent;
+      const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+      btnSpan.innerHTML = raw.replace(re, '<mark>$1</mark>');
+    } else {
+      btnSpan.innerHTML = btnSpan.textContent;
+    }
+  });
+
+  // Hide empty groups
+  allGroups.forEach(g => {
+    const hasVisible = [...g.querySelectorAll('.faq-item')].some(f => f.style.display !== 'none');
+    g.style.display = hasVisible ? '' : 'none';
+  });
+
+  document.getElementById('no-results').style.display = visibleCount === 0 ? 'block' : 'none';
+  document.getElementById('faq-count').textContent = visibleCount + ' hasil ditemukan';
+
+  // Scroll to FAQ section
+  if (visibleCount > 0) {
+    document.getElementById('faq-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function clearSearch() {
+  document.getElementById('search-input').value = '';
+  document.getElementById('clear-btn').style.display = 'none';
+  doSearch('');
+}
+
+function setSearch(val) {
+  document.getElementById('search-input').value = val;
+  document.getElementById('clear-btn').style.display = 'none';
+  doSearch(val);
+  document.getElementById('faq-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── Report modal ──
+function openReportForm() {
+  const m = document.getElementById('report-modal');
+  m.style.display = 'flex';
+  setTimeout(() => m.style.display = 'flex', 10);
+}
+function closeReportForm() {
+  document.getElementById('report-modal').style.display = 'none';
+}
+function submitReport() {
+  const type = document.getElementById('report-type').value;
+  const email = document.getElementById('report-email').value.trim();
+  const desc = document.getElementById('report-desc').value.trim();
+  if (!type) { showToast('Pilih jenis laporan terlebih dahulu', 'warning'); return; }
+  if (!email || !email.includes('@')) { showToast('Masukkan email yang valid', 'warning'); return; }
+  if (!desc) { showToast('Deskripsikan masalah Anda', 'warning'); return; }
+  closeReportForm();
+  showToast('Laporan terkirim! Kami akan merespons segera.', 'check_circle');
+  // Reset
+  document.getElementById('report-type').value = '';
+  document.getElementById('report-email').value = '';
+  document.getElementById('report-desc').value = '';
+}
+// Close modal on backdrop click
+document.getElementById('report-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeReportForm();
+});
+
+// ── Toast ──
+let toastTimer;
+function showToast(msg, icon='check_circle') {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  document.getElementById('toast-icon').textContent = icon;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+</script>
+</body>
+</html>
